@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    #colorPickerContainer {
+      text-align: center;
+    }
+
+    #colorBox {
+      width: 150px;
+      height: 150px;
+      border: 2px solid #0c0202;
+      margin-bottom: 20px;
+      border-radius: 20px;
+    }
+
+    #colorInput {
+      padding: 5px;
+      font-size: 16px;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    #colorCodes {
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+      
+    }
+  </style>
+</head>
+<body style="background-color: rgb(193, 167, 167); color: #171717;">
+
+<div id="colorPickerContainer">
+  <div id="colorBox"></div>
+  <input type="color" id="colorInput" value="#3498db" />
+  <p id="colorCodes">#3498db</p>
+</div>
+
+<script>
+  // Get elements
+  const colorBox = document.getElementById('colorBox');
+  const colorInput = document.getElementById('colorInput');
+  const colorCodes = document.getElementById('colorCodes');
+
+  // Set initial color
+  updateColorCodes(colorInput.value);
+
+  // Attach event listener to input change
+  colorInput.addEventListener('input', function() {
+    const selectedColor = colorInput.value;
+    colorBox.style.backgroundColor = selectedColor;
+    updateColorCodes(selectedColor);
+  });
+
+  // Function to update color codes
+  function updateColorCodes(selectedColor) {
+    // Hexadecimal color code
+    const hexCode = selectedColor.toUpperCase();
+
+    // RGBA color code
+    const rgbaCode = getRGBA(selectedColor);
+
+    // Display the color codes
+    colorCodes.innerHTML = `Hex: ${hexCode}<br>RGBA: ${rgbaCode}`;
+  }
+
+  // Function to convert hex to rgba
+  function getRGBA(hex) {
+    hex = hex.slice(1); // Remove the '#' character
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `rgba(${r}, ${g}, ${b}, 1)`;
+  }
+</script>
+
+</body>
+</html>
